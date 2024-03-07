@@ -37,9 +37,9 @@
                 sh "docker stop \$(docker ps -q) || sleep 1"
                 sh "docker rm \$(docker ps -aq) || sleep 1"
 
-                sh 'docker run -d --name flask-app --network new-network $DOCKER_USER/Task1/flask-app:latest'
+                sh 'docker run -d --name flask-app --network new-network $DOCKER_USER/task1/flask-app:latest'
 
-                sh 'docker run -d -p 80:80 --name mynginx --network new-network $DOCKER_USER/Task1/mynginx:latest'
+                sh 'docker run -d -p 80:80 --name mynginx --network new-network $DOCKER_USER/task1/mynginx:latest'
 
             }
 
