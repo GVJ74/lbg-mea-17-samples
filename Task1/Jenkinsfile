@@ -23,9 +23,9 @@
 
             steps {
 
-                sh 'docker build -t $DOCKER_USER/task1/flask-app .'
+                sh 'docker build -t $DOCKER_USER/task1/flask-app Task1 '
 
-                sh 'docker build -t $DOCKER_USER/task1/mynginx -f Task1/Dockerfile_nginx .'
+                sh 'docker build -t $DOCKER_USER/task1/mynginx -f Task1/Dockerfile_nginx Task1'
 
             }
 
