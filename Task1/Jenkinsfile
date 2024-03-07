@@ -1,0 +1,52 @@
+
+ pipeline {
+    agent any
+    environment {
+        DOCKER_USER = "gvj74"
+        MYSQL_ROOT_PASSWORD = "sausages74"
+    }
+    stages {
+
+         stage('Init') {
+
+            steps {
+
+                sh 'docker rm -f $(docker ps -qa) || true'
+
+                sh 'docker network create new-network || true'
+
+            }
+
+        }
+
+        stage('Build') {
+
+            steps {
+
+                sh 'docker build -t $DOCKER_USER/Task1/flask-app .'
+
+                sh 'docker build -t $DOCKER_USER/Task1/mynginx -f Task1/Dockerfile.nginx .'
+
+            }
+
+        }
+
+        stage('Deploy') {
+
+            steps {
+                sh "docker stop \$(docker ps -q) || sleep 1"
+                sh "docker rm \$(docker ps -aq) || sleep 1"
+
+                sh 'docker run -d --name flask-app --network new-network $DOCKER_USER/Task1/flask-app:latest'
+
+                sh 'docker run -d -p 80:80 --name mynginx --network new-network $DOCKER_USER/Task1/mynginx:latest'
+
+            }
+
+        }
+
+    }
+
+}
+
+
